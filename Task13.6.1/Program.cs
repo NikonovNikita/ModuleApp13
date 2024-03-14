@@ -30,10 +30,14 @@ class Program
     static long TestingList(Stopwatch stopwatch, string[] array)
     {
         var list = new List<string>(array);
+        var middleIndx = list.Count / 2;
 
         stopwatch.Start();
 
-        list.InsertRange(list.Count / 2, array);
+        for(int i = 0; i < array.Length; i++)
+        {
+            list.Insert(middleIndx + i, array[i]);
+        }
 
         stopwatch.Stop();
 
@@ -45,14 +49,19 @@ class Program
     static long TestingLinkedList(Stopwatch stopwatch, string[] array)
     {
         var linkedList = new LinkedList<string>(array);
-        LinkedListNode<string> node = linkedList.Find("Обломовщина");
+        LinkedListNode<string> middleNode = linkedList.First;
+
+        for(int i = 0; i < linkedList.Count / 2; i++)
+        {
+            middleNode = middleNode.Next;
+        }
 
         stopwatch.Start();
 
-        for(int i = 0; i < array.Length; i++)
+        foreach (var item in array)
         {
-            linkedList.AddAfter(node, array[i]);
-            node = node.Next;
+            linkedList.AddAfter(middleNode, item);
+            middleNode = middleNode.Next;
         }
 
         stopwatch.Stop();
